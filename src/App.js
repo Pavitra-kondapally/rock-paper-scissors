@@ -1,11 +1,8 @@
 import {Component} from 'react'
-
 import Header from './components/Header'
 import PlayingView from './components/PlayingView'
 import GameResultsView from './components/GameResultsView'
-
 import ScoreContext from './context/ScoreContext'
-
 import './App.css'
 
 const choicesList = [
@@ -30,100 +27,65 @@ const choicesList = [
 ]
 
 class App extends Component {
-  state = {
-    score: 0,
-    yourChoice: '',
-    opponentChoice: '',
-    isPlayOn: true,
-    gameResult: '',
-  }
+  constructor(props) {
+    super(props)
 
-  onSelectingChoiceButton = id => {
-    const opponentButton = Math.floor(Math.random() * (choicesList.length + 1))
-    if (id === 'ROCK') {
-      if (opponentButton.id === 'SCISSORS') {
-        this.setState(prevState => ({
-          yourChoice: 'ROCK',
-          opponentChoice: opponentButton.id,
-          score: prevState.score + 1,
-          gameResult: 'YOU WON',
-          isPlayOn: false,
-        }))
-      } else if (opponentButton.id === 'PAPER') {
-        this.setState(prevState => ({
-          yourChoice: 'ROCK',
-          opponentChoice: opponentButton.id,
-          score: prevState.score - 1,
-          gameResult: 'YOU LOSE',
-          isPlayOn: false,
-        }))
-      } else if (opponentButton.id === 'ROCK') {
-        this.setState({
-          yourChoice: 'ROCK',
-          opponentChoice: opponentButton.id,
-          gameResult: 'IT IS DRAW',
-          isPlayOn: false,
-        })
-      }
-    } else if (id === 'SCISSORS') {
-      if (opponentButton.id === 'ROCK') {
-        this.setState(prevState => ({
-          yourChoice: 'SCISSORS',
-          opponentChoice: opponentButton.id,
-          score: prevState.score - 1,
-          gameResult: 'YOU LOSE',
-          isPlayOn: false,
-        }))
-      } else if (opponentButton.id === 'PAPER') {
-        this.setState(prevState => ({
-          yourChoice: 'SCISSORS',
-          opponentChoice: opponentButton.id,
-          score: prevState.score + 1,
-          gameResult: 'YOU WON',
-          isPlayOn: false,
-        }))
-      } else if (opponentButton.id === 'SCISSORS') {
-        this.setState({
-          yourChoice: 'SCISSORS',
-          opponentChoice: opponentButton.id,
-          gameResult: 'IT IS DRAW',
-          isPlayOn: false,
-        })
-      }
-    } else if (id === 'PAPER') {
-      if (opponentButton.id === 'ROCK') {
-        this.setState(prevState => ({
-          yourChoice: 'PAPER',
-          opponentChoice: opponentButton.id,
-          score: prevState.score + 1,
-          gameResult: 'YOU WON',
-          isPlayOn: false,
-        }))
-      } else if (opponentButton.id === 'SCISSORS') {
-        this.setState(prevState => ({
-          yourChoice: 'PAPER',
-          opponentChoice: opponentButton.id,
-          score: prevState.score - 1,
-          gameResult: 'YOU LOSE',
-          isPlayOn: false,
-        }))
-      } else if (opponentButton.id === 'PAPER') {
-        this.setState({
-          yourChoice: 'PAPER',
-          opponentChoice: opponentButton.id,
-          gameResult: 'IT IS DRAW',
-          isPlayOn: false,
-        })
-      }
+    this.state = {
+      score: 0,
+      yourChoice: '',
+      opponentChoice: '',
+      isPlayOn: true,
+      gameResult: '',
     }
+
+    // Bind the function to the class instance
+    this.selectingYourChoiceButton = this.selectingYourChoiceButton.bind(this)
   }
 
   restartingGame = () => {
     this.setState({isPlayOn: true})
   }
 
+  selectingYourChoiceButton(id) {
+    const opponentIndex = Math.floor(Math.random() * choicesList.length)
+    const opponentChoice = choicesList[opponentIndex].id
+
+    console.log(`opponent choice ${opponentChoice}`)
+
+    if (id === opponentChoice) {
+      this.setState({
+        yourChoice: id,
+        opponentChoice,
+        gameResult: 'IT IS DRAW',
+        isPlayOn: false,
+      })
+    } else if (
+      (id === 'ROCK' && opponentChoice === 'SCISSORS') ||
+      (id === 'PAPER' && opponentChoice === 'ROCK') ||
+      (id === 'SCISSORS' && opponentChoice === 'PAPER')
+    ) {
+      this.setState(prevState => ({
+        yourChoice: id,
+        opponentChoice,
+        score: prevState.score + 1,
+        gameResult: 'YOU WON',
+        isPlayOn: false,
+      }))
+    } else {
+      this.setState(prevState => ({
+        yourChoice: id,
+        opponentChoice,
+        score: prevState.score - 1,
+        gameResult: 'YOU LOSE',
+        isPlayOn: false,
+      }))
+    }
+    console.log(`your choice ${id}`)
+  }
+
   render() {
     const {score, yourChoice, opponentChoice, isPlayOn, gameResult} = this.state
+
     return (
       <ScoreContext.Provider
         value={{
@@ -132,7 +94,7 @@ class App extends Component {
           opponentChoice,
           isPlayOn,
           gameResult,
-          onSelectingChoiceButton: this.onSelectingChoiceButton,
+          selectingYourChoiceButton: this.selectingYourChoiceButton,
           restartingGame: this.restartingGame,
         }}
       >

@@ -5,7 +5,7 @@ const ScoreContext = React.createContext({
   yourChoice: '',
   opponentChoice: '',
   isPlayOn: true,
-  onSelectingChoiceButton: () => {},
+  selectingYourChoiceButton: () => {},
   restartingGame: () => {},
 })
 

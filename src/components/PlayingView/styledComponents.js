@@ -5,8 +5,7 @@ export const AppContainer = styled.div`
   background-size: cover;
   padding: 20px;
 `
-export const ButtonsList = styled.ul`
-  list-style: none;
+export const ButtonsList = styled.div`
   display: flex;
 `
 export const PopupContainer = styled.div`

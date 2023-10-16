@@ -5,16 +5,18 @@ const OptionButtonItem = props => {
   const {id, imageUrl, dataTestIdValue} = optionDetails
 
   const onClickingButton = () => {
-    console.log('Button clicked')
+    console.log(`Button is clicked with id ${id}`)
     onSelectingChoiceButton(id)
   }
 
   return (
-    <li>
-      <OptionItemButton type="button" onClick={onClickingButton}>
-        <OptionButtonImage src={imageUrl} data-testid={dataTestIdValue} />
-      </OptionItemButton>
-    </li>
+    <OptionItemButton
+      type="button"
+      onClick={onClickingButton}
+      data-testid={dataTestIdValue}
+    >
+      <OptionButtonImage src={imageUrl} alt={id} />
+    </OptionItemButton>
   )
 }
 

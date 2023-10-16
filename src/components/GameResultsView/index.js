@@ -18,7 +18,6 @@ import {
   RulesImage,
   ClosePopupButton,
 } from './styledComponents'
-import Header from '../Header'
 
 const choicesList = [
   {
@@ -56,7 +55,6 @@ const GameResultsView = () => (
       }
       return (
         <AppContainer>
-          <Header />
           <TeamsContainer>
             <EachTeamContainer>
               <TeamText>YOU</TeamText>
@@ -68,7 +66,7 @@ const GameResultsView = () => (
             </EachTeamContainer>
           </TeamsContainer>
           <TeamText>{gameResult}</TeamText>
-          <PlayAgainButton onclick={onClickingPlayAgain}>
+          <PlayAgainButton onClick={onClickingPlayAgain}>
             PLAY AGAIN
           </PlayAgainButton>
           <PopupContainer>

@@ -12,15 +12,9 @@ export const HeaderContainer = styled.nav`
   justify-content: space-between;
   padding: 10px;
 `
-export const ChoiceList = styled.ul`
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-`
-export const ListItem = styled.li`
+export const ChoiceList = styled.h1`
   color: #ffffff;
   font-family: 'Roboto';
-  margin: 10px;
 `
 export const ScoreContainer = styled.div`
   height: 100px;
